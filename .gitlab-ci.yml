@@ -1,0 +1,23 @@
+stages:
+  - build
+  - deploy
+
+build_project:
+  stage: build
+  only:
+    - master
+  tags:
+    - dockerbuilder
+  script:
+    - if [ ! "$(docker ps -q -f name=restapiahmad)" ]; then echo "Container empty"; else docker rm -f restapiahmad && docker rmi -f registry.carsworld.id/ahmad/restapiahmad:local; fi
+    - docker build -t registry.carsworld.id/ahmad/restapiahmad:local .
+    - docker push registry.carsworld.id/ahmad/restapiahmad:local
+
+deploy_project:
+  stage: deploy
+  only:
+    - master
+  tags:
+    - dockerbuilder
+  script:
+    - docker run --name restapiahmad -dit -p 8023:4000 registry.carsworld.id/ahmad/restapiahmad:local

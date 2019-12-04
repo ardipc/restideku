@@ -21,7 +21,7 @@ exports.auth = (req, res, next) => {
 				db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${req.body.email}' AND password = '${req.body.password}'`);
 				res.json({ error: false, result: result[0] });
 			} else {
-				res.json({ error: false, result: 'User not found'});
+				res.json({ error: true, result: 'User not found'});
 			}
 		}
 	});
@@ -40,7 +40,6 @@ exports.authVoucher = (req, res, next) => {
 						res.json({ error: true, result: error });
 					} else {
 						if(result.length == 1) {
-							console.log(result[0])
 							var token = jwt.sign(
 								{ email: result[0].email, password: result[0].password }, 
 								env.APP_KEY,
@@ -56,6 +55,22 @@ exports.authVoucher = (req, res, next) => {
 				});
 			} else {
 				res.json({ error: false, result: 'Voucher not found' });
+			}
+		}
+	});
+};
+
+exports.authMe = (req, res, next) => {
+	db.query(`SELECT user.*, grup.grup_name, user.company_id, company.company_name, user.branch_id, 
+		branch.branch_name FROM user JOIN company ON company.company_id = user.company_id 
+		JOIN branch ON branch.branch_id = user.branch_id JOIN grup ON grup.company_id = company.company_id WHERE user.email = '${req.params.email}'`, (error, result, fields) => {
+		if(error) {
+			res.json({ error: true, result: error });
+		} else {
+			if(result.length == 1) {
+				res.json({ error: false, result: result[0] });
+			} else {
+				res.json({ error: false, result: 'User not found'});
 			}
 		}
 	});
