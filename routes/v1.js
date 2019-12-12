@@ -30,6 +30,7 @@ router.post('/user', auth.allow, userController.createUser);
 router.get('/user', auth.allow, userController.getUserList);
 router.get('/user/:user_id', auth.allow, userController.getUserOne);
 router.put('/user/:user_id', auth.allow, userController.updateUser);
+router.put('/user/avatar/:user_id', auth.allow, userController.updateAvatarUser);
 router.delete('/user/:user_id', auth.allow, userController.deleteUser);
 
 /* table branch */

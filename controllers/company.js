@@ -8,7 +8,6 @@ var storage = multer.diskStorage({
     cb(null, './public/company');
   },
   filename: (req, file, cb) => {
-    console.log(file);
     var filetype = '';
     if(file.mimetype === 'image/gif') {
       filetype = 'gif';

@@ -1,10 +1,34 @@
+var env = require('../env.json');
 var conf = require('../configs/config');
 var db = require('../configs/database');
+
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/user');
+  },
+  filename: (req, file, cb) => {
+    console.log(file);
+    var filetype = '';
+    if(file.mimetype === 'image/gif') {
+      filetype = 'gif';
+    }
+    if(file.mimetype === 'image/png') {
+      filetype = 'png';
+    }
+    if(file.mimetype === 'image/jpeg') {
+      filetype = 'jpg';
+    }
+    cb(null, 'img-' + Date.now() + '.' + filetype);
+  }
+});
+var uploadLogo = multer({storage: storage}).single('avatar');
 
 exports.createUser = (req, res, next) => {
 	var formData = {
 		company_id: req.body.company_id,
 		branch_id: req.body.branch_id,
+		identity: req.body.identity,
 		name: req.body.name,
 		email: req.body.email,
 		phone: req.body.phone,
@@ -34,8 +58,8 @@ exports.createUser = (req, res, next) => {
 
 							// create user
 							db.query(`INSERT INTO user 
-								(user_id, company_id, branch_id, name, email, phone, address, password, level, status, registered) VALUES (
-								null, '${formData.company_id}', '${formData.branch_id}', '${formData.name}', '${formData.email}',
+								(user_id, company_id, branch_id, identity, name, email, phone, address, password, level, status, registered) VALUES (
+								null, '${formData.company_id}', '${formData.branch_id}', '${formData.identity}', '${formData.name}', '${formData.email}',
 								'${formData.phone}','${formData.address}','${formData.password}','${formData.level}','${formData.status}',
 								'${conf.dateTimeNow()}')`, (error, result, fields) => {
 								if(error) {
@@ -55,7 +79,6 @@ exports.createUser = (req, res, next) => {
 			}
 		}
 	});
-
 };
 
 exports.getUserList = (req, res, next) => {
@@ -71,7 +94,6 @@ exports.getUserList = (req, res, next) => {
 		  });
 		}
 	});
-
 };
 
 exports.getUserOne = (req, res, next) => {
@@ -99,6 +121,7 @@ exports.updateUser = (req, res, next) => {
 	var formData = {
 		company_id: req.body.company_id,
 		branch_id: req.body.branch_id,
+		identity: req.body.identity,
 		name: req.body.name,
 		email: req.body.email,
 		phone: req.body.phone,
@@ -111,6 +134,7 @@ exports.updateUser = (req, res, next) => {
 	db.query(`UPDATE user SET 
 		company_id = '${formData.company_id}', 
 		branch_id = '${formData.branch_id}', 
+		identity = '${formData.identity}', 
 		name = '${formData.name}', 
 		email = '${formData.email}', 
 		phone = '${formData.phone}', 
@@ -127,6 +151,25 @@ exports.updateUser = (req, res, next) => {
 	});
 };
 
+exports.updateAvatarUser = (req, res, next) => {
+	uploadLogo(req, res, (err) => {
+		if(!req.file) {
+			res.json({error: true, result: err});
+		} else {
+			var formData = {
+				avatar: `${env.APP_URL}/user/${req.file.filename}`,
+			};
+
+			db.query(`UPDATE user SET avatar = '${formData.avatar}' WHERE user_id = '${req.params.user_id}'`, (error, result, fields) => {
+				if(error) {
+					res.json({error: true, result: error});
+				} else {
+					res.json({error: false, result: formData.avatar });
+				}
+			});
+		}
+	});
+};
 
 exports.deleteUser = (req, res, next) => {
 	db.query(`DELETE FROM user WHERE user_id = '${req.params.user_id}'`, (error, result, next) => {
@@ -136,4 +179,4 @@ exports.deleteUser = (req, res, next) => {
 			res.json({error: false, result: result});
 		}
 	})
-}
+};
