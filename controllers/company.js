@@ -29,13 +29,13 @@ exports.createCompany = (req, res, next) => {
 			res.json({error: true, result: err});
 		} else {
 			var formData = {
-				name: conf.sanitize(req.body.name),
+				name: conf.sanitize(req.body.company_name),
 				logo: `${env.APP_URL}/company/${req.file.filename}`,
 				validity: conf.sanitize(req.body.validity),
 				status: conf.sanitize(req.body.status)
 			};
 
-			db.query(`INSERT INTO company (company_id, name, logo, validity, status) 
+			db.query(`INSERT INTO company (company_id, company_name, logo, validity, status) 
 												VALUES (null,'${formData.name}','${formData.logo}','${formData.validity}',
 													'${formData.status}')`, (error, result, fields) => {
 				if(error) {
@@ -75,7 +75,7 @@ exports.updateCompany = (req, res, next) => {
 		status: conf.sanitize(req.body.status)
 	};
 
-	db.query(`UPDATE company SET name = '${formData.name}', validity = '${formData.validity}', status = '${formData.status}' WHERE company_id = '${req.params.company_id}'`, (error, result, fields) => {
+	db.query(`UPDATE company SET company_name = '${formData.name}', validity = '${formData.validity}', status = '${formData.status}' WHERE company_id = '${req.params.company_id}'`, (error, result, fields) => {
 		if(error) {
 			res.json({ error: true, result: error });
 		} else {
