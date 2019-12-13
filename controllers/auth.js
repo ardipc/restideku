@@ -61,12 +61,7 @@ exports.authVoucher = (req, res, next) => {
 };
 
 exports.authMe = (req, res, next) => {
-	let tempMe = null;
-	db.query(`SELECT user.*, grup.grup_name, user.company_id, company.company_name, user.branch_id, 
-		branch.branch_name, access.* FROM user JOIN company ON company.company_id = user.company_id 
-		JOIN branch ON branch.branch_id = user.branch_id JOIN grup ON grup.company_id = company.company_id 
-		JOIN access ON access.user_id = user.user_id
-		WHERE user.email = '${req.params.email}'`, (error, result, fields) => {
+	db.query(`SELECT * FROM user WHERE email = '${req.params.email}'`, (error, result, fields) => {
 		if(error) {
 			res.json({ error: true, result: error });
 		} else {
