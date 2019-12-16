@@ -1,6 +1,7 @@
 var env = require('../env.json');
 var conf = require('../configs/config');
 var db = require('../configs/database');
+var md5 = require('md5');
 
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -33,7 +34,7 @@ exports.createUser = (req, res, next) => {
 		email: req.body.email,
 		phone: req.body.phone,
 		address: req.body.address,
-		password: req.body.password,
+		password: md5(req.body.password),
 		level: req.body.level,
 		status: req.body.status
 	};
@@ -126,7 +127,7 @@ exports.updateUser = (req, res, next) => {
 		email: req.body.email,
 		phone: req.body.phone,
 		address: req.body.address,
-		password: req.body.password,
+		password: md5(req.body.password),
 		level: req.body.level,
 		status: req.body.status
 	};
@@ -142,6 +143,22 @@ exports.updateUser = (req, res, next) => {
 		password = '${formData.password}', 
 		level = '${formData.level}', 
 		status = '${formData.status}' WHERE user_id = '${req.params.user_id}'`, 
+		(error, result, fields) => {
+		if(error) {
+			res.json({error: true, result: error});
+		} else {
+			res.json({error: false, result: result});
+		}
+	});
+};
+
+exports.updatePasswordUser = (req, res, next) => {
+	var formData = {
+		password: md5(req.body.password),
+	};
+
+	db.query(`UPDATE user SET 
+		password = '${formData.password}' WHERE user_id = '${req.params.user_id}'`, 
 		(error, result, fields) => {
 		if(error) {
 			res.json({error: true, result: error});
