@@ -2,6 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cors = require('cors');
+var helmet = require('helmet');
+var responseTime = require('response-time');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
@@ -11,6 +13,8 @@ var v1Router = require('./routes/v1');
 var app = express();
 app.disable('x-powered-by');
 app.use(cors());
+app.use(helmet());
+app.use(responseTime());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
