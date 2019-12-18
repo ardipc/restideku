@@ -11,8 +11,7 @@ exports.auth = (req, res, next) => {
 	var inputEmail = req.body.email;
 	var inputPasswrod = md5(req.body.password);
 
-	db.query(`SELECT email, password, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
-		console.log(result);
+	db.query(`SELECT email, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
 		if(error) {
 			res.json({ error: true, result: error });
 		} else {
