@@ -8,7 +8,11 @@ exports.auth = (req, res, next) => {
 	if(req.body.email == '') res.json({ error: true, result: 'Email required' });
 	if(req.body.password == '') res.json({ error: true, result: 'Password required' });
 
-	db.query(`SELECT email, password, token FROM user WHERE email = '${req.body.email}' AND password = '${md5(req.body.password)}'`, (error, result, fields) => {
+	var inputEmail = req.body.email;
+	var inputPasswrod = md5(req.body.password);
+
+	db.query(`SELECT email, password, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
+		console.log(result);
 		if(error) {
 			res.json({ error: true, result: error });
 		} else {
@@ -19,7 +23,7 @@ exports.auth = (req, res, next) => {
 					{ expiresIn: '7d', algorithm: 'HS384' }
 				);
 
-				db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${req.body.email}' AND password = '${md5(req.body.password)}'`);
+				db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`);
 				res.json({ error: false, result: result[0] });
 			} else {
 				res.json({ error: true, result: 'User not found'});
