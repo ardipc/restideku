@@ -11,13 +11,13 @@ exports.auth = (req, res, next) => {
 	var inputEmail = req.body.email;
 	var inputPasswrod = md5(req.body.password);
 
-	db.query(`SELECT email, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
+	db.query(`SELECT user_id, email, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
 		if(error) {
 			res.json({ error: true, result: error });
 		} else {
 			if(result.length == 1) {
 				var token = jwt.sign(
-					{ email: req.body.email, password: req.body.password }, 
+					{ email: req.body.email, user_id: result[0].user_id }, 
 					env.APP_KEY,
 					{ expiresIn: '7d', algorithm: 'HS384' }
 				);
