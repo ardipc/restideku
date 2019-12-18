@@ -6,7 +6,7 @@ var jwt = require('jsonwebtoken');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'REST' });
+  res.render('index', { title: 'API IDEKU' });
 });
 
 router.get('/auth/:user/:pass', function(req, res, next) {

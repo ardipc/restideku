@@ -1,8 +1,26 @@
 body {
-  padding: 50px;
+	margin: 0px;
+  padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url(../images/bg.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 a {
   color: #00B7FF;
+}
+
+.title {
+	text-align: center;
+	color: white;
+}
+
+.desc {
+	text-align: center;
+	color: white;
+}
+
+.spasi {
+	margin-top: 100px;
 }
