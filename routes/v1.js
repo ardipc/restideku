@@ -8,6 +8,8 @@ var userController = require('../controllers/user');
 var branchController = require('../controllers/branch');
 var grupController = require('../controllers/grup');
 var accessController = require('../controllers/access');
+var categoryController = require('../controllers/category');
+var attachmentController = require('../controllers/attachment');
 
 var env = require('../env.json');
 var jwt = require('jsonwebtoken');
@@ -59,5 +61,20 @@ router.delete('/access/id/:access_id', auth.allow, accessController.deleteAccess
 router.get('/access/user/:user_id', auth.allow, accessController.getAccessOneByUser);
 router.put('/access/user/:user_id', auth.allow, accessController.updateAccessByUser);
 router.delete('/access/user/:user_id', auth.allow, accessController.deleteAccessByUser);
+
+/* table learning_category */
+router.post('/category', auth.allow, categoryController.createCategory);
+router.get('/category', auth.allow, categoryController.getAllCategory);
+router.get('/category/:category_id', auth.allow, categoryController.getOneCategory);
+router.put('/category/:category_id', auth.allow, categoryController.updateCategory);
+router.put('/category/image/:category_id', auth.allow, categoryController.updateImageCategory);
+router.delete('/category/:category_id', auth.allow, categoryController.deleteCategory);
+
+/* table attachment */
+router.post('/attachment', auth.allow, attachmentController.createAttachment);
+router.get('/attachment', auth.allow, attachmentController.getAllAttachment);
+router.get('/attachment/:attachment_id', auth.allow, attachmentController.getOneAttachment);
+router.put('/attachment/:attachment_id', auth.allow, attachmentController.updateAttachment);
+router.delete('/attachment/:attachment_id', auth.allow, attachmentController.deleteAttachment);
 
 module.exports = router;
