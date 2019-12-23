@@ -23,7 +23,7 @@ exports.createBranch = (req, res, next) => {
 };
 
 exports.getBranchList = (req, res, next) => {
-	db.query(`SELECT * FROM branch`, (error, result, fields) => {
+	db.query(`SELECT b.*, c.company_name FROM branch b JOIN company c ON c.company_id = b.company_id`, (error, result, fields) => {
 		if(error) {
 			res.json({error: true, result: error});
 		} else {
@@ -37,7 +37,7 @@ exports.getBranchList = (req, res, next) => {
 };
 
 exports.getBranchOne = (req, res, next) => {
-	db.query(`SELECT * FROM branch WHERE branch_id = '${req.params.branch_id}'`, 
+	db.query(`SELECT b.*, c.company_name FROM branch b JOIN company c ON c.company_id = b.company_id WHERE branch_id = '${req.params.branch_id}'`, 
 		(error, result, fields) => {
 			if(error) {
 				res.json({error: true, result: result});
