@@ -39,7 +39,7 @@ exports.authVoucher = (req, res, next) => {
 			res.json({ error: true, result: error });
 		} else {
 			if(result.length == 1) {
-				db.query(`SELECT email, password, token FROM user WHERE email = '${result[0].email}' AND password = '${result[0].password}'`, (error, result, fields) => {
+				db.query(`SELECT user_id, email, token FROM user WHERE email = '${result[0].email}' AND password = '${result[0].password}'`, (error, result, fields) => {
 					if(error) {
 						res.json({ error: true, result: error });
 					} else {
