@@ -22,7 +22,7 @@ exports.createGrup = (req, res, next) => {
 };
 
 exports.getGrupList = (req, res, next) => {
-	db.query(`SELECT * FROM grup`, (error, result, fields) => {
+	db.query(`SELECT g.*, c.company_name FROM grup g JOIN company c ON c.company_id = g.company_id`, (error, result, fields) => {
 		if(error) {
 			res.json({error: true, result: error});
 		} else {
@@ -36,7 +36,7 @@ exports.getGrupList = (req, res, next) => {
 };
 
 exports.getGrupOne = (req, res, next) => {
-	db.query(`SELECT * FROM grup WHERE grup_id = '${req.params.grup_id}'`, 
+	db.query(`SELECT g.*, c.company_name FROM grup g JOIN company c ON c.company_id = g.company_id WHERE grup_id = '${req.params.grup_id}'`, 
 		(error, result, fields) => {
 			if(error) {
 				res.json({error: true, result: result});
