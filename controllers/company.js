@@ -71,7 +71,7 @@ exports.getCompanyOne = (req, res, next) => {
 exports.updateCompany = (req, res, next) => {
 	var formData = {
 		name: conf.sanitize(req.body.name),
-		validity: conf.sanitize(req.body.validity),
+		validity: req.body.validity,
 		status: conf.sanitize(req.body.status)
 	};
 
