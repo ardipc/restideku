@@ -48,7 +48,7 @@ router.delete('/branch/:branch_id', auth.allow, branchController.deleteBranch);
 router.post('/grup', auth.allow, grupController.createGrup);
 router.get('/grup', auth.allow, grupController.getGrupList);
 router.get('/grup/:grup_id', auth.allow, grupController.getGrupOne);
-router.get('/grup/company/:grup_id', auth.allow, grupController.getGrupByCompany);
+router.get('/grup/company/:company_id', auth.allow, grupController.getGrupByCompany);
 router.put('/grup/:grup_id', auth.allow, grupController.updateGrup);
 router.delete('/grup/:grup_id', auth.allow, grupController.deleteGrup);
 
