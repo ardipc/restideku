@@ -31,7 +31,7 @@ exports.createCompany = (req, res, next) => {
 			var formData = {
 				name: conf.sanitize(req.body.company_name),
 				logo: `${env.APP_URL}/company/${req.file.filename}`,
-				validity: conf.sanitize(req.body.validity),
+				validity: req.body.validity,
 				status: conf.sanitize(req.body.status)
 			};
 
