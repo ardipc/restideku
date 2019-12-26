@@ -35,6 +35,21 @@ exports.getGrupList = (req, res, next) => {
 
 };
 
+exports.getGrupByCompany = (req, res, next) => {
+	db.query(`SELECT g.*, c.company_name FROM grup g JOIN company c ON c.company_id = g.company_id WHERE g.company_id = '${req.params.company_id}'`, (error, result, fields) => {
+		if(error) {
+			res.json({error: true, result: error});
+		} else {
+		  res.json({
+		  	error: false,
+		  	result: result
+		  });
+		}
+	});
+
+};
+
+
 exports.getGrupOne = (req, res, next) => {
 	db.query(`SELECT g.*, c.company_name FROM grup g JOIN company c ON c.company_id = g.company_id WHERE grup_id = '${req.params.grup_id}'`, 
 		(error, result, fields) => {

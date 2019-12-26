@@ -33,8 +33,20 @@ exports.getBranchList = (req, res, next) => {
 		  });
 		}
 	});
-
 };
+
+exports.getBranchByCompany = (req, res, next) => {
+	db.query(`SELECT b.*, c.company_name FROM branch b JOIN company c ON c.company_id = b.company_id WHERE b.company_id = '${req.params.company_id}'`, (error, result, fields) => {
+		if(error) {
+			res.json({error: true, result: error});
+		} else {
+		  res.json({
+		  	error: false,
+		  	result: result
+		  });
+		}
+	});
+}
 
 exports.getBranchOne = (req, res, next) => {
 	db.query(`SELECT b.*, c.company_name FROM branch b JOIN company c ON c.company_id = b.company_id WHERE branch_id = '${req.params.branch_id}'`, 
