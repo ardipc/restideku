@@ -97,6 +97,22 @@ exports.getUserList = (req, res, next) => {
 	});
 };
 
+exports.getUserByCompany = (req, res, next) => {
+	db.query(`SELECT user.*, grup.grup_name, user.company_id, company.company_name, user.branch_id, 
+		branch.branch_name FROM user JOIN company ON company.company_id = user.company_id 
+		JOIN branch ON branch.branch_id = user.branch_id JOIN grup ON grup.company_id = company.company_id
+		WHERE company.company_id = '${req.params.company_id}'`, (error, result, fields) => {
+		if(error) {
+			res.json({error: true, result: error});
+		} else {
+		  res.json({
+		  	error: false,
+		  	result: result
+		  });
+		}
+	});
+};
+
 exports.getUserOne = (req, res, next) => {
 	db.query(`SELECT user.*, user.company_id, company.company_name, user.branch_id, 
 		branch.branch_name FROM user JOIN company ON company.company_id = user.company_id 
