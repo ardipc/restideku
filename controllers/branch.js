@@ -72,7 +72,7 @@ exports.updateBranch = (req, res, next) => {
 		branch_name: req.body.branch_name
 	};
 
-	db.query(`UPDATE Branch SET 
+	db.query(`UPDATE branch SET 
 		company_id = '${formData.company_id}', branch_name = '${formData.branch_name}' WHERE branch_id = '${req.params.branch_id}'`, 
 		(error, result, fields) => {
 		if(error) {
