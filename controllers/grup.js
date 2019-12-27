@@ -74,7 +74,7 @@ exports.updateGrup = (req, res, next) => {
 		grup_name: req.body.grup_name
 	};
 
-	db.query(`UPDATE Grup SET 
+	db.query(`UPDATE grup SET 
 		company_id = '${formData.company_id}', grup_name = '${formData.grup_name}' WHERE grup_id = '${req.params.grup_id}'`, 
 		(error, result, fields) => {
 		if(error) {
