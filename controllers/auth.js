@@ -15,7 +15,8 @@ exports.auth = (req, res, next) => {
 		console.log('auth 1: ', result);
 		if(error) {
 			res.json({ error: true, result: error });
-		} else {
+		} 
+		// else {
 			if(result.length == 1) {
 				var token = jwt.sign(
 					{ email: req.body.email, user_id: result[0].user_id }, 
@@ -32,7 +33,7 @@ exports.auth = (req, res, next) => {
 			} else {
 				res.json({ error: true, result: 'User not found'});
 			}
-		}
+		// }
 	});
 };
 
@@ -63,6 +64,7 @@ exports.authVoucher = (req, res, next) => {
 							res.json({ error: true, result: 'User not found'});
 						}
 					}
+
 				});
 			} else {
 				res.json({ error: true, result: 'Voucher not found' });
