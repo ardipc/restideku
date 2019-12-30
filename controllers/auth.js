@@ -11,7 +11,7 @@ exports.auth = (req, res, next) => {
 	var inputEmail = req.body.email;
 	var inputPasswrod = md5(req.body.password);
 
-	db.query(`SELECT user_id, email, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
+	db.query(`SELECT user_id, validity, email, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
 		if(error) {
 			res.json({ error: true, result: error });
 		} else {
@@ -22,6 +22,10 @@ exports.auth = (req, res, next) => {
 					{ expiresIn: '7d', algorithm: 'HS384' }
 				);
 
+				if(result[0].validity == null) {
+					db.query(`UPDATE user SET validity = '${conf.dateTimeNow}' WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`);
+				}
+				
 				db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`);
 				res.json({ error: false, result: result[0] });
 			} else {
