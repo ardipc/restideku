@@ -59,7 +59,7 @@ exports.authVoucher = (req, res, next) => {
 						} else {
 							res.json({ error: false, result: 'User not found'});
 						}
-					}cm
+					}
 				});
 			} else {
 				res.json({ error: false, result: 'Voucher not found' });
