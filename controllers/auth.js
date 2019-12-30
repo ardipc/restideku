@@ -4,7 +4,8 @@ var db = require('../configs/database');
 var jwt = require('jsonwebtoken');
 var md5 = require('md5');
 
-exports.auth = (req, res, next) => {
+
+exports.auth = (req, res) => {
 	if(req.body.email == '') res.json({ error: true, result: 'Email required' });
 	if(req.body.password == '') res.json({ error: true, result: 'Password required' });
 
@@ -12,12 +13,11 @@ exports.auth = (req, res, next) => {
 	var inputPasswrod = md5(req.body.password);
 
 	db.query(`SELECT user_id, validity, email, level, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
-		console.log('auth 1: ', result);
-		if(error) {
+		if(error != null) {
+			console.log('with error');
 			res.json({ error: true, result: error });
-		} 
-		// else {
-			if(result.length == 1) {
+		} else {
+			if(result.length != 0) {
 				var token = jwt.sign(
 					{ email: req.body.email, user_id: result[0].user_id }, 
 					env.APP_KEY,
@@ -33,7 +33,7 @@ exports.auth = (req, res, next) => {
 			} else {
 				res.json({ error: true, result: 'User not found'});
 			}
-		// }
+		}
 	});
 };
 
@@ -41,13 +41,11 @@ exports.authVoucher = (req, res, next) => {
 	if(req.body.voucher == '') res.json({ error: true, result: 'Voucher required' });
 
 	db.query(`SELECT email, password FROM user WHERE voucher = '${req.body.voucher}'`, (error, result, fields) => {
-		console.log('vouc 1: ', result);
 		if(error) {
 			res.json({ error: true, result: error });
 		} else {
 			if(result.length == 1) {
 				db.query(`SELECT user_id, validity, email, level, token FROM user WHERE email = '${result[0].email}' AND password = '${result[0].password}'`, (error, result, fields) => {
-					console.log('vouc 2: ', result);
 					if(error) {
 						res.json({ error: true, result: error });
 					} else {
@@ -61,10 +59,9 @@ exports.authVoucher = (req, res, next) => {
 							db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${result[0].email}' AND password = '${result[0].password}'`);
 							res.json({ error: false, result: result[0] });
 						} else {
-							res.json({ error: true, result: 'User not found'});
+							res.json({ error: false, result: 'User not found'});
 						}
 					}
-
 				});
 			} else {
 				res.json({ error: true, result: 'Voucher not found' });
@@ -81,7 +78,7 @@ exports.authMe = (req, res, next) => {
 			if(result.length == 1) {
 				res.json({ error: false, result: result[0]});
 			} else {
-				res.json({ error: true, result: 'User not found'});
+				res.json({ error: false, result: 'User not found'});
 			}
 		}
 	});
