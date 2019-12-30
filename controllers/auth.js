@@ -57,12 +57,12 @@ exports.authVoucher = (req, res, next) => {
 							db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${result[0].email}' AND password = '${result[0].password}'`);
 							res.json({ error: false, result: result[0] });
 						} else {
-							res.json({ error: false, result: 'User not found'});
+							res.json({ error: true, result: 'User not found'});
 						}
 					}
 				});
 			} else {
-				res.json({ error: false, result: 'Voucher not found' });
+				res.json({ error: true, result: 'Voucher not found' });
 			}
 		}
 	});
@@ -76,7 +76,7 @@ exports.authMe = (req, res, next) => {
 			if(result.length == 1) {
 				res.json({ error: false, result: result[0]});
 			} else {
-				res.json({ error: false, result: 'User not found'});
+				res.json({ error: true, result: 'User not found'});
 			}
 		}
 	});
