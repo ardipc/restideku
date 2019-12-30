@@ -183,6 +183,23 @@ exports.updatePasswordUser = (req, res, next) => {
 	});
 };
 
+exports.updateValidityUser = (req, res, next) => {
+	var formData = {
+		validity: conf.dateTimeNow()
+	};
+
+	db.query(`UPDATE user SET 
+		validity = '${formData.validity}' WHERE user_id = '${req.params.user_id}'`, 
+		(error, result, fields) => {
+		if(error) {
+			res.json({error: true, result: error});
+		} else {
+			res.json({error: false, result: result});
+		}
+	});
+};
+
+
 exports.updateAvatarUser = (req, res, next) => {
 	uploadLogo(req, res, (err) => {
 		if(!req.file) {
