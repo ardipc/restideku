@@ -23,9 +23,9 @@ exports.auth = (req, res, next) => {
 				);
 
 				if(result[0].validity == null) {
-					db.query(`UPDATE user SET validity = '${conf.dateTimeNow}' WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`);
+					db.query(`UPDATE user SET validity = '${conf.dateTimeNow()}' WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`);
 				}
-				
+
 				db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`);
 				res.json({ error: false, result: result[0] });
 			} else {
