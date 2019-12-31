@@ -84,8 +84,7 @@ exports.createUser = (req, res, next) => {
 
 exports.postCek = (req, res, next) => {
 	db.query(`SELECT ${req.params.field} FROM user WHERE ${req.params.field} = '${req.params.value}'`, (error, result, field) => {
-		console.log(result.length)
-		if(error) {
+		if(error !== null) {
 			res.json({error: true, result: error});
 		} else {
 			if(result.length === 0) {
