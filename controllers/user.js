@@ -82,6 +82,21 @@ exports.createUser = (req, res, next) => {
 	});
 };
 
+exports.postCek = (req, res, next) => {
+	db.query(`SELECT ${req.params.field} FROM user WHERE ${req.params.field} = '${req.params.value}'`, (error, result, field) => {
+		console.log(result.length)
+		if(error) {
+			res.json({error: true, result: error});
+		} else {
+			if(result.length === 0) {
+				res.json({error: false, result: `${req.params.field} bisa digunakan.`})
+			} else {
+				res.json({error: true, result: `${req.params.field} telah dipakai.`})
+			}
+		}
+	})
+};
+
 exports.getUserList = (req, res, next) => {
 	db.query(`SELECT user.*, user.company_id, company.company_name, user.branch_id, 
 		branch.branch_name FROM user JOIN company ON company.company_id = user.company_id 

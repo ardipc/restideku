@@ -29,6 +29,7 @@ router.delete('/company/:company_id', auth.allow, companyController.deleteCompan
 
 /* table user. */
 router.post('/user', auth.allow, userController.createUser);
+router.get('/user/:field/:value', auth.allow, userController.postCek);
 router.get('/user', auth.allow, userController.getUserList);
 router.get('/user/:user_id', auth.allow, userController.getUserOne);
 router.get('/user/company/:company_id', auth.allow, userController.getUserByCompany);
