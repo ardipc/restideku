@@ -197,7 +197,7 @@ exports.updatePasswordUser = (req, res, next) => {
 
 exports.updateEmailUser = (req, res, next) => {
 	var formData = {
-		email: re.body.email
+		email: req.body.email
 	};
 
 	db.query(`UPDATE user SET 
