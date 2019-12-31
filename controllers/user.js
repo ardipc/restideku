@@ -142,7 +142,6 @@ exports.updateUser = (req, res, next) => {
 		email: req.body.email,
 		phone: req.body.phone,
 		address: req.body.address,
-		password: md5(req.body.password),
 		level: req.body.level,
 		status: req.body.status
 	};
@@ -155,7 +154,6 @@ exports.updateUser = (req, res, next) => {
 		email = '${formData.email}', 
 		phone = '${formData.phone}', 
 		address = '${formData.address}', 
-		password = '${formData.password}', 
 		level = '${formData.level}', 
 		status = '${formData.status}' WHERE user_id = '${req.params.user_id}'`, 
 		(error, result, fields) => {
