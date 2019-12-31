@@ -35,6 +35,7 @@ router.get('/user/:user_id', auth.allow, userController.getUserOne);
 router.get('/user/company/:company_id', auth.allow, userController.getUserByCompany);
 router.put('/user/:user_id', auth.allow, userController.updateUser);
 router.put('/user/password/:user_id', auth.allow, userController.updatePasswordUser);
+router.put('/user/email/:user_id', auth.allow, userController.updateEmailUser);
 router.put('/user/validity/:user_id', auth.allow, userController.updateValidityUser);
 router.put('/user/avatar/:user_id', auth.allow, userController.updateAvatarUser);
 router.delete('/user/:user_id', auth.allow, userController.deleteUser);
