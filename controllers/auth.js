@@ -51,7 +51,7 @@ exports.authVoucher = (req, res, next) => {
 					} else {
 						if(result.length == 1) {
 							var token = jwt.sign(
-								{ email: result[0].email, password: result[0].password }, 
+								{ email: req.body.email, user_id: result[0].user_id }, 
 								env.APP_KEY,
 								{ expiresIn: '7d', algorithm: 'HS384' }
 							);
