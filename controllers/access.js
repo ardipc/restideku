@@ -56,7 +56,7 @@ exports.getAccessOneById = (req, res, next) => {
 		} else {
 			res.json({
 				error: false,
-				result: result
+				result: (result.length !== 0) ? result[0] : [] 
 			});
 		}
 	});
@@ -69,7 +69,7 @@ exports.getAccessOneByUser = (req, res, next) => {
 		} else {
 			res.json({
 				error: false,
-				result: result
+				result: (result.length !== 0) ? result[0] : [] 
 			});
 		}
 	});
