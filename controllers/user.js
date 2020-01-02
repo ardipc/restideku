@@ -179,6 +179,23 @@ exports.updateUser = (req, res, next) => {
 	});
 };
 
+exports.cekPassword = (req, res, next) => {
+	var formData = {
+		password: md5(req.body.password),
+		user_id: req.body.user_id
+	};
+
+	db.query(`SELECT password FROM user WHERE 
+		password = '${formData.password}' AND user_id = '${formData.user_id}'`, 
+		(error, result, fields) => {
+		if(error) {
+			res.json({error: true, result: error});
+		} else {
+			res.json({error: false, result: result});
+		}
+	});
+};
+
 exports.updatePasswordUser = (req, res, next) => {
 	var formData = {
 		password: md5(req.body.password),

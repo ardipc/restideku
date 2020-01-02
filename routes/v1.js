@@ -29,15 +29,19 @@ router.delete('/company/:company_id', auth.allow, companyController.deleteCompan
 
 /* table user. */
 router.post('/user', auth.allow, userController.createUser);
+router.post('/user/password', auth.allow, userController.cekPassword);
+
 router.get('/user/cek/:field/:value', auth.allow, userController.postCek);
 router.get('/user', auth.allow, userController.getUserList);
 router.get('/user/:user_id', auth.allow, userController.getUserOne);
 router.get('/user/company/:company_id', auth.allow, userController.getUserByCompany);
+
 router.put('/user/:user_id', auth.allow, userController.updateUser);
 router.put('/user/password/:user_id', auth.allow, userController.updatePasswordUser);
 router.put('/user/email/:user_id', auth.allow, userController.updateEmailUser);
 router.put('/user/validity/:user_id', auth.allow, userController.updateValidityUser);
 router.put('/user/avatar/:user_id', auth.allow, userController.updateAvatarUser);
+
 router.delete('/user/:user_id', auth.allow, userController.deleteUser);
 
 /* table branch */
