@@ -10,6 +10,7 @@ var grupController = require('../controllers/grup');
 var accessController = require('../controllers/access');
 var categoryController = require('../controllers/category');
 var attachmentController = require('../controllers/attachment');
+var courseController = require('../controllers/course');
 
 var env = require('../env.json');
 var jwt = require('jsonwebtoken');
@@ -86,5 +87,13 @@ router.get('/attachment', auth.allow, attachmentController.getAllAttachment);
 router.get('/attachment/:attachment_id', auth.allow, attachmentController.getOneAttachment);
 router.put('/attachment/:attachment_id', auth.allow, attachmentController.updateAttachment);
 router.delete('/attachment/:attachment_id', auth.allow, attachmentController.deleteAttachment);
+
+/* table course */
+router.post('/course', auth.allow, courseController.createCourse);
+router.get('/course', auth.allow, courseController.getAllCourse);
+router.get('/course/:course_id', auth.allow, courseController.getOneCourse);
+router.put('/course/:course_id', auth.allow, courseController.updateCourse);
+router.put('/course/image/:course_id', auth.allow, courseController.updateImageCourse);
+router.delete('/course/:course_id', auth.allow, courseController.deleteCourse);
 
 module.exports = router;
