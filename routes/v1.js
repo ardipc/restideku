@@ -64,6 +64,7 @@ router.delete('/grup/:grup_id', auth.allow, grupController.deleteGrup);
 /* table access */
 router.post('/access', auth.allow, accessController.createAccess);
 router.get('/access', auth.allow, accessController.getAccessList);
+router.get('/access/user', auth.allow, accessController.getAllUser)
 
 router.get('/access/id/:access_id', auth.allow, accessController.getAccessOneById);
 router.put('/access/id/:access_id', auth.allow, accessController.updateAccessById);
