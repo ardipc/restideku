@@ -192,7 +192,7 @@ exports.deleteAccessByUser = (req, res, next) => {
 
 
 exports.getAllUser = (req, res, next) => {
-	db.query(`SELECT user_id, name FROM user WHERE user_id NOT IN (SELECT user_id FROM access)`, (error, result, fields) => {
+	db.query(`SELECT user_id, name FROM user WHERE user_id NOT IN (SELECT user_id FROM access) AND company_id = '${req.params.company_id}'`, (error, result, fields) => {
 		if(error) {
 			res.json({ error: true, result: error });
 		} else {
