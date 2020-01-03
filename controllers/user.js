@@ -228,6 +228,22 @@ exports.updateEmailUser = (req, res, next) => {
 	});
 };
 
+exports.updateVoucherUser = (req, res, next) => {
+	var formData = {
+		voucher: req.body.voucher
+	};
+
+	db.query(`UPDATE user SET 
+		voucher = '${formData.voucher}' WHERE user_id = '${req.params.user_id}'`, 
+		(error, result, fields) => {
+		if(error) {
+			res.json({error: true, result: error});
+		} else {
+			res.json({error: false, result: result});
+		}
+	});
+};
+
 exports.updateValidityUser = (req, res, next) => {
 	var formData = {
 		validity: conf.dateTimeNow()
