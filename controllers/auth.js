@@ -28,8 +28,11 @@ exports.auth = (req, res) => {
 					db.query(`UPDATE user SET validity = '${conf.dateTimeNow()}' WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`);
 				}
 
-				db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`);
-				res.json({ error: false, result: result[0] });
+				db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
+					db.query(`SELECT user_id, validity, email, level, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
+						res.json({ error: false, result: result[0] });
+					});
+				});
 			} else {
 				res.json({ error: true, result: 'User not found'});
 			}
@@ -56,8 +59,11 @@ exports.authVoucher = (req, res, next) => {
 								{ expiresIn: '7d', algorithm: 'HS384' }
 							);
 
-							db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${result[0].email}' AND password = '${result[0].password}'`);
-							res.json({ error: false, result: result[0] });
+							db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${result[0].email}' AND password = '${result[0].password}'`, (error, result, fields) => {
+								db.query(`SELECT user_id, validity, email, level, token FROM user WHERE email = '${inputEmail}' AND password = '${inputPasswrod}'`, (error, result, fields) => {
+									res.json({ error: false, result: result[0] });
+								});
+							});
 						} else {
 							res.json({ error: false, result: 'User not found'});
 						}
