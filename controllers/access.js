@@ -49,6 +49,19 @@ exports.getAccessList = (req, res, next) => {
 	});
 };
 
+exports.getAccessByCompany = (req, res, next) => {
+	db.query(`SELECT a.*, u.name FROM access a JOIN user u ON u.user_id = a.user_id WHERE u.company_id = '${req.params.company_id}'`, (error, result, fields) => {
+		if(error) {
+			res.json({ error: true, result: error });
+		} else {
+			res.json({
+				error: false,
+				result: result
+			});
+		}
+	});
+}
+
 exports.getAccessOneById = (req, res, next) => {
 	db.query(`SELECT a.*, u.name FROM access a JOIN user u ON u.user_id = a.user_id WHERE access_id = '${req.params.access_id}'`, (error, result, fields) => {
 		if(error) {
