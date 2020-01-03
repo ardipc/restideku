@@ -59,7 +59,7 @@ exports.authVoucher = (req, res, next) => {
 								{ expiresIn: '7d', algorithm: 'HS384' }
 							);
 
-							db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${result[0].email}' AND password = '${result[0].password}'`, (error, result, fields) => {
+							db.query(`UPDATE user SET token = '${token}', last_login = '${conf.dateTimeNow()}' WHERE email = '${result[0].email}' AND password = '${result[0].password}'`, (error2, result2, fields2) => {
 								db.query(`SELECT user_id, validity, email, level, token FROM user WHERE email = '${result[0].email}' AND password = '${result[0].password}'`, (error, result, fields) => {
 									res.json({ error: false, result: result[0] });
 								});
