@@ -11,6 +11,7 @@ var accessController = require('../controllers/access');
 var categoryController = require('../controllers/category');
 var attachmentController = require('../controllers/attachment');
 var courseController = require('../controllers/course');
+var chapterController = require('../controllers/chapter');
 
 var env = require('../env.json');
 var jwt = require('jsonwebtoken');
@@ -98,5 +99,16 @@ router.get('/course/:course_id', auth.allow, courseController.getOneCourse);
 router.put('/course/:course_id', auth.allow, courseController.updateCourse);
 router.put('/course/image/:course_id', auth.allow, courseController.updateImageCourse);
 router.delete('/course/:course_id', auth.allow, courseController.deleteCourse);
+
+/* table course_chapter */
+router.post('/chapter', auth.allow, chapterController.createChapter);
+router.get('/chapter', auth.allow, chapterController.getAllChapter);
+router.get('/chapter/:chapter_id', auth.allow, chapterController.getOneChapter);
+router.put('/chapter/:chapter_id', auth.allow, chapterController.updateChapter);
+router.put('/chapter/video/:chapter_id', auth.allow, chapterController.updateVideoChapter);
+router.delete('/chapter/:chapter_id', auth.allow, chapterController.deleteChapter);
+
+/* course by company_id */
+router.get('/course/company/:company_id', auth.allow, courseController.getCourseByCompany);
 
 module.exports = router;

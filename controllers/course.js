@@ -36,7 +36,7 @@ exports.createCourse = (req, res, next) => {
         title: req.body.title,
         caption: req.body.caption,
         body: req.body.body,
-        image: `${env.APP_URL}/user/${req.file.filename}`,
+        image: `${env.APP_URL}/course/${req.file.filename}`,
         created_at: conf.dateTimeNow(),
         publish: '1'
       };
@@ -106,7 +106,7 @@ exports.updateImageCourse = (req, res, next) => {
       res.json({error: true, result: err});
     } else {
       let formData = {
-        image: `${env.APP_URL}/user/${req.file.filename}`
+        image: `${env.APP_URL}/course/${req.file.filename}`
       };
 
       db.query(`UPDATE course SET image = '${formData.image}' WHERE course_id = '${req.params.course_id}'`, (error, result, fields) => {
@@ -129,3 +129,17 @@ exports.deleteCourse = (req, res, next) => {
     }
   })
 };
+
+
+exports.getCourseByCompany = (req, res, next) => {
+  let sql = `SELECT lc.*, c.* 
+    FROM learning_category lc JOIN course c ON c.category_id = lc.category_id
+    WHERE lc.company_id = '${req.params.company_id}'`;
+  db.query(sql, (error, result, fields) => {
+    if(error) {
+      res.json({ error: true, result: error });
+    } else {
+      res.json({error: false, result: result });
+    }
+  })
+}
