@@ -5,6 +5,7 @@ var auth = require('../configs/auth');
 var authController = require('../controllers/auth');
 var companyController = require('../controllers/company');
 var userController = require('../controllers/user');
+var settingController = require('../controllers/setting');
 var branchController = require('../controllers/branch');
 var grupController = require('../controllers/grup');
 var accessController = require('../controllers/access');
@@ -46,6 +47,15 @@ router.put('/user/validity/:user_id', auth.allow, userController.updateValidityU
 router.put('/user/avatar/:user_id', auth.allow, userController.updateAvatarUser);
 
 router.delete('/user/:user_id', auth.allow, userController.deleteUser);
+
+/* table user_setting */
+router.post('/setting', auth.allow, settingController.createSettingUser);
+router.get('/setting/:setting_id', auth.allow, settingController.getUserSettingById);
+router.get('/setting/user/:user_id', auth.allow, settingController.getUserSettingByUser);
+router.put('/setting/:setting_id', auth.allow, settingController.updateUserSettingById);
+router.put('/setting/user/:user_id', auth.allow, settingController.updateUserSettingByUser);
+router.delete('/setting/:setting_id', auth.allow, settingController.deleteUserSettingById);
+router.delete('/setting/user/:user_id', auth.allow, settingController.deleteUserSettingByUser);
 
 /* table branch */
 router.post('/branch', auth.allow, branchController.createBranch);
