@@ -1,4 +1,5 @@
 var env = require('../env.json');
+var db = require('../configs/database');
 
 exports.createSettingUser = (req, res, next) => {
 	let formData = {
