@@ -77,7 +77,8 @@ exports.authVoucher = (req, res, next) => {
 };
 
 exports.authMe = (req, res, next) => {
-	db.query(`SELECT * FROM user WHERE email = '${req.params.email}'`, (error, result, fields) => {
+	db.query(`SELECT user_id, company_id, branch_id, identity, voucher, name, email, phone, address,
+		avatar, level, status, registered, last_login, validity FROM user WHERE email = '${req.params.email}'`, (error, result, fields) => {
 		if(error) {
 			res.json({ error: true, result: error });
 		} else {
