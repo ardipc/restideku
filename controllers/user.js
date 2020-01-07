@@ -66,6 +66,7 @@ exports.createUser = (req, res, next) => {
 								if(error) {
 									res.json({ error: true, result: error });
 								} else {
+									db.query(`INSERT INTO user_setting (setting_id, user_id) VALUES (null, '${result.insertId}')`);
 									res.json({
 										error: false,
 										result: result
