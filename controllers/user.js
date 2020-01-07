@@ -283,6 +283,7 @@ exports.updateAvatarUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
+	db.query(`DELETE FROM user_setting WHERE user_id = '${req.params.user_id}'`);
 	db.query(`DELETE FROM user WHERE user_id = '${req.params.user_id}'`, (error, result, next) => {
 		if(error) {
 			res.json({error: true, result: error});
