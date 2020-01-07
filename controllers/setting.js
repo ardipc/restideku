@@ -24,7 +24,7 @@ exports.createSettingUser = (req, res, next) => {
 }
 
 exports.getUserSettingById = (req, res, next) => {
-	db.query(`SELECT u.*, s.* FROM user u JOIN user_setting s ON s.user_id = u.user_id WHERE setting_id = '${req.params.setting_id}'`, (error, result, fields) => {
+	db.query(`SELECT u.*, s.* FROM user u JOIN user_setting s ON s.user_id = u.user_id WHERE s.setting_id = '${req.params.setting_id}'`, (error, result, fields) => {
 		if(error) {
 			res.json({error: true, result: error});
 		} else {
@@ -34,7 +34,7 @@ exports.getUserSettingById = (req, res, next) => {
 };
 
 exports.getUserSettingByUser = (req, res, next) => {
-	db.query(`SELECT u.*, s.* FROM user u JOIN user_setting s ON s.user_id = u.user_id WHERE user_id = '${req.params.user_id}'`, (error, result, fields) => {
+	db.query(`SELECT u.*, s.* FROM user u JOIN user_setting s ON s.user_id = u.user_id WHERE s.user_id = '${req.params.user_id}'`, (error, result, fields) => {
 		if(error) {
 			res.json({error: true, result: error});
 		} else {
