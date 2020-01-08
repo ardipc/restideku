@@ -91,6 +91,7 @@ router.delete('/access/user/:user_id', auth.allow, accessController.deleteAccess
 router.post('/category', auth.allow, categoryController.createCategory);
 router.get('/category', auth.allow, categoryController.getAllCategory);
 router.get('/category/:category_id', auth.allow, categoryController.getOneCategory);
+router.get('/category/company/:company_id', auth.allow, categoryController.getCategoryByCompany);
 router.put('/category/:category_id', auth.allow, categoryController.updateCategory);
 router.put('/category/image/:category_id', auth.allow, categoryController.updateImageCategory);
 router.delete('/category/:category_id', auth.allow, categoryController.deleteCategory);

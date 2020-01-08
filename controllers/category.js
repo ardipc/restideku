@@ -66,6 +66,19 @@ exports.getAllCategory = (req, res, next) => {
 	});
 };
 
+exports.getCategoryByCompany = (req, res, next) => {
+	db.query(`SELECT l.*, c.company_name FROM learning_category l JOIN company c ON c.company_id = l.company_id WHERE l.company_id = '${req.params.company_id}'`, (error, result, fields) => {
+		if(error) {
+			res.json({ error: true, result: error });
+		} else {
+			res.json({
+				error: false,
+				result: result
+			});
+		}
+	});
+};
+
 exports.getOneCategory = (req, res, next) => {
 	db.query(`SELECT l.*, c.company_name FROM learning_category l JOIN company c ON c.company_id = l.company_id WHERE l.category_id = '${req.params.category_id}'`, (error, result, fields) => {
 		if(error) {
