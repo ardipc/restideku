@@ -7,6 +7,13 @@ var responseTime = require('response-time');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var dd_options = {
+  'response_code': true,
+  'tags': ['app:my_app']
+};
+
+var connect_datadog = require('connect-datadog')(dd_options);
+
 var indexRouter = require('./routes/index');
 var v1Router = require('./routes/v1');
 
@@ -25,6 +32,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(connect_datadog);
 
 app.use('/', indexRouter);
 app.use('/v1', v1Router);
