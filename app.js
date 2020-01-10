@@ -7,17 +7,18 @@ var responseTime = require('response-time');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var dd_options = {
-  'response_code': true,
-  'tags': ['app:my_app']
-};
-
-var connect_datadog = require('connect-datadog')(dd_options);
-
 var indexRouter = require('./routes/index');
 var v1Router = require('./routes/v1');
 
-var tracer = require('dd-trace').init()
+var apm = require('elastic-apm-node').start({
+  // Override service name from package.json
+  // Allowed characters: a-z, A-Z, 0-9, -, _, and space
+  serviceName: 'restapiahmad',
+  // Use if APM Server requires a token
+  secretToken: '',
+  // Set custom APM Server URL (default: http://localhost:8200)
+  serverUrl: 'http://elk.carsworld.co.id:8200'
+});
 
 var app = express();
 app.disable('x-powered-by');
@@ -34,8 +35,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(connect_datadog);
 
 app.use('/', indexRouter);
 app.use('/v1', v1Router);
