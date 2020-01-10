@@ -17,6 +17,8 @@ var connect_datadog = require('connect-datadog')(dd_options);
 var indexRouter = require('./routes/index');
 var v1Router = require('./routes/v1');
 
+var tracer = require('dd-trace').init()
+
 var app = express();
 app.disable('x-powered-by');
 app.use(cors());
