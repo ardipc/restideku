@@ -42,7 +42,7 @@ exports.createChapter = (req, res, next) => {
         attachment_id: req.body.attachment_id
       };
 
-      db.query(`INSERT INTO course_chapter (chapter_id, course_id, company_id, chapter_number, chapter_itle, chapter_body, chapter_video, attachment_id) VALUES (
+      db.query(`INSERT INTO course_chapter (chapter_id, course_id, company_id, chapter_number, chapter_title, chapter_body, chapter_video, attachment_id) VALUES (
         null, '${formData.course_id}', '${formData.company_id}', '${formData.chapter_number}', '${formData.title}', '${formData.body}', 
         '${formData.video}', '${formData.attachment_id}')`, (error, result, fields) => {
         if(error) {
