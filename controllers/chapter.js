@@ -36,8 +36,8 @@ exports.createChapter = (req, res, next) => {
         course_id: req.body.course_id,
         company_id: req.body.company_id,
         chapter_number: req.body.chapter_number,
-        title: req.body.title,
-        body: req.body.body,
+        title: req.body.chapter_title,
+        body: req.body.chapter_body,
         video: `${env.APP_URL}/course/${req.file.filename}`,
         attachment_id: req.body.attachment_id
       };
@@ -80,8 +80,8 @@ exports.updateChapter = (req, res, next) => {
     course_id: req.body.course_id,
     company_id: req.body.company_id,
     chapter_number: req.body.chapter_number,
-    title: req.body.title,
-    body: req.body.body,
+    title: req.body.chapter_title,
+    body: req.body.chapter_body,
     attachment_id: req.body.attachment_id
   };
 
@@ -89,8 +89,8 @@ exports.updateChapter = (req, res, next) => {
     course_id = '${formData.category_id}',
     company_id = '${formData.company_id}',
     chapter_number = '${formData.chapter_number}',
-    chapter_title = '${formData.title}',
-    chapter_body = '${formData.body}',
+    chapter_title = '${formData.chapter_title}',
+    chapter_body = '${formData.chapter_body}',
     attachment_id = '${formData.attachment_id}'
     WHERE chapter_id = '${req.params.chapter_id}'`, (error, result, fields) => {
     if(error) {
