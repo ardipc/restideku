@@ -45,8 +45,6 @@ exports.createChapter = (req, res, next) => {
       let sql = `INSERT INTO course_chapter (chapter_id, course_id, company_id, chapter_number, chapter_title, chapter_body, chapter_video, attachment_id) VALUES (
       null, '${formData.course_id}', '${formData.company_id}', '${formData.chapter_number}', '${formData.title}', '${formData.body}', '${formData.video}', '${formData.attachment_id}')`;
 
-      console.log(sql);
-
       db.query(sql, (error, result, fields) => {
         if(error) {
           res.json({error: true, result: error});
