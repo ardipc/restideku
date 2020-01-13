@@ -20,4 +20,4 @@ deploy_project:
   tags:
     - dockerbuilder
   script:
-    - docker run --name restapiahmad -dit -p 8023:4000 -v restapiahmad:/opt/app registry.carsworld.id/ahmad/restapiahmad:local
+    - docker run --name restapiahmad -dit -p 8023:4000 -v restapiahmad:/opt/app/public registry.carsworld.id/ahmad/restapiahmad:local
