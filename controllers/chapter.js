@@ -13,6 +13,15 @@ var storage = multer.diskStorage({
     if(file.mimetype === 'audio/mp4' || file.mimetype === 'application/mp4' || file.mimetype === 'video/mp4') {
       filetype = 'mp4';
     }
+    if(file.mimetype === 'image/gif') {
+      filetype = 'gif';
+    }
+    if(file.mimetype === 'image/png') {
+      filetype = 'png';
+    }
+    if(file.mimetype === 'image/jpeg') {
+      filetype = 'jpg';
+    }
     cb(null, 'video-' + Date.now() + '.' + filetype);
   }
 });
@@ -33,7 +42,7 @@ exports.createChapter = (req, res, next) => {
         attachment_id: req.body.attachment_id
       };
 
-      db.query(`INSERT INTO course_chapter (chapter_id, course_id, company_id, chapter_number, title, body, video, attachment_id) VALUES (
+      db.query(`INSERT INTO course_chapter (chapter_id, course_id, company_id, chapter_number, chapter_itle, chapter_body, chapter_video, attachment_id) VALUES (
         null, '${formData.course_id}', '${formData.company_id}', '${formData.chapter_number}', '${formData.title}', '${formData.body}', 
         '${formData.video}', '${formData.attachment_id}')`, (error, result, fields) => {
         if(error) {
@@ -80,8 +89,8 @@ exports.updateChapter = (req, res, next) => {
     course_id = '${formData.category_id}',
     company_id = '${formData.company_id}',
     chapter_number = '${formData.chapter_number}',
-    title = '${formData.title}',
-    body = '${formData.body}',
+    chapter_title = '${formData.title}',
+    chapter_body = '${formData.body}',
     attachment_id = '${formData.attachment_id}'
     WHERE chapter_id = '${req.params.chapter_id}'`, (error, result, fields) => {
     if(error) {
@@ -101,7 +110,7 @@ exports.updateVideoChapter = (req, res, next) => {
         video: `${env.APP_URL}/course/${req.file.filename}`
       };
 
-      db.query(`UPDATE chapter SET video = '${formData.video}' WHERE chapter_id = '${req.params.chapter_id}'`, (error, result, fields) => {
+      db.query(`UPDATE chapter SET chapter_video = '${formData.video}' WHERE chapter_id = '${req.params.chapter_id}'`, (error, result, fields) => {
         if(error) {
           res.json({error: true, result: error});
         } else {
