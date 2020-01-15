@@ -115,6 +115,8 @@ router.delete('/course/:course_id', auth.allow, courseController.deleteCourse);
 router.post('/chapter', auth.allow, chapterController.createChapter);
 router.get('/chapter', auth.allow, chapterController.getAllChapter);
 router.get('/chapter/:chapter_id', auth.allow, chapterController.getOneChapter);
+router.get('/chapter/course/:chapter_id', auth.allow, chapterController.getChapterByCourse);
+
 router.put('/chapter/:chapter_id', auth.allow, chapterController.updateChapter);
 router.put('/chapter/video/:chapter_id', auth.allow, chapterController.updateVideoChapter);
 router.delete('/chapter/:chapter_id', auth.allow, chapterController.deleteChapter);

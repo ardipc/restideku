@@ -76,6 +76,16 @@ exports.getOneChapter = (req, res, next) => {
   });
 };
 
+exports.getChapterByCourse = (req, res, next) => {
+  db.query(`SELECT * FROM course_chapter WHERE course_id = '${req.params.course_id}'`, (error, result, fields) => {
+    if(error) {
+      res.json({error: true, result: error});
+    } else {
+      res.json({error: false, result: (result.length !== 0 ) ? result[0] : [] });
+    }
+  });
+};
+
 exports.updateChapter = (req, res, next) => {
   let formData = {
     course_id: req.body.course_id,
